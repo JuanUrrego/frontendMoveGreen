@@ -20,12 +20,12 @@ export default function Table({
           <th scope="col">Estado</th>
           <th scope="col">Rol</th>
           <th scope="col">Fecha creación</th>
-          <th scope="col">Fecha modificación</th>
+          <th scope="col">Fecha actualizacion</th>
           <th scope="col">Opciones</th>
         </tr>
       </thead>
       <tbody>
-        {usuarios.map(({ nombre, email, estado, rol, fechaCreacion, fechaModificacion, _id }, index) => (
+        {usuarios.map(({ nombre, email, estado, rol, fechaCreacion, fechaActualizacion, _id }, index) => (
           <tr key={index}>
             <th scope="row">{index + 1}</th>
             <td>{_id}</td>
@@ -34,7 +34,7 @@ export default function Table({
             <td>{estado ? 'Activo' : 'Inactivo'}</td>
             <td>{rol}</td>
             <td>{fechaCreacion}</td>
-            <td>{fechaModificacion}</td>
+            <td>{fechaActualizacion}</td>
             <td>
               <button 
                 type="button" 

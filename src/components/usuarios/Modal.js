@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default function Modal({
   usuario,
@@ -10,21 +10,21 @@ export default function Modal({
   editing
 }) {
   const handleChange = e => {
-    change(e)
-  }
+    change(e);
+  };
 
   const guardarUsuario = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (editing) {
-      actualizarUsuario()
+      actualizarUsuario();
     } else {
-      guardar()
+      guardar();
     }
-  }
+  };
 
   const clear = () => {
-    clearForm()
-  }
+    clearForm();
+  };
 
   return (
     <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -74,8 +74,8 @@ export default function Modal({
                   id="password" 
                   name="password"
                   onChange={handleChange}
-                  value={editing ? usuarioEdit.password : usuario.password}
-                  required
+                  value={editing ? usuarioEdit.password || '' : usuario.password}
+                  placeholder={editing ? 'Deja en blanco para no cambiar' : ''}
                 />
               </div>
               <div className="modal-footer">
@@ -98,5 +98,5 @@ export default function Modal({
         </div>
       </div>
     </div>
-  )
+  );
 }

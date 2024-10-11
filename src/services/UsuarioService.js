@@ -2,38 +2,22 @@ import { axiosConfiguration } from '../configuration/axiosConfiguration';
 
 // Obtener todos los usuarios
 const obtenerUsuarios = () => {
-    return axiosConfiguration.get('usuarios', {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    return axiosConfiguration.get('/usuario');
 };
 
-// Crear un usuario
+// Crear un nuevo usuario
 const crearUsuario = (data) => {
-    return axiosConfiguration.post('usuarios', data, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    return axiosConfiguration.post('/usuario', data);
 };
 
 // Editar un usuario
 const editarUsuario = (usuarioId, data) => {
-    return axiosConfiguration.put('usuarios/'+usuarioId, data, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    return axiosConfiguration.put(`/usuario/${usuarioId}`, data);
 };
 
 // Eliminar un usuario
 const borrarUsuario = (usuarioId) => {
-    return axiosConfiguration.delete('usuarios/'+usuarioId, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    return axiosConfiguration.delete(`/usuario/${usuarioId}`);
 };
 
 export {

@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { borrarUsuario, crearUsuario, editarUsuario, obtenerUsuarios } from '../../services/UsuarioService'
-import Title from '../ui/Title'
-import Modal from './Modal'
-import Table from './Table'
-import ButtonModal from '../ui/ButtonModal'
-import Spinner from '../ui/Spinner'
-import Swal from 'sweetalert2'
-
+import React, { useEffect, useState } from 'react';
+import { borrarUsuario, crearUsuario, editarUsuario, obtenerUsuarios } from '../../services/UsuarioService';
+import Title from '../ui/Title';
+import Modal from './Modal';
+import Table from './Table';
+import ButtonModal from '../ui/ButtonModal';
+import Spinner from '../ui/Spinner';
+import Swal from 'sweetalert2';
 
 export default function Usuarios() {
 
-  const [usuarios, setUsuarios] = useState([])
-  const [loader, setLoader] = useState(false)
+  const [usuarios, setUsuarios] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   // Valores predeterminados para el estado y el rol
-  const estadoPredeterminado = 'Activo'
-  const rolPredeterminado = 'Usuario'
+  const estadoPredeterminado = 'Activo';
+  const rolPredeterminado = 'Usuario';
 
   const [usuario, setUsuario] = useState({
     nombre: '',
@@ -23,9 +22,9 @@ export default function Usuarios() {
     estado: estadoPredeterminado,
     password: '',
     rol: rolPredeterminado
-  })
+  });
 
-  const [editing, setEditing] = useState(false) // Para controlar si estamos editando
+  const [editing, setEditing] = useState(false); // Para controlar si estamos editando
   const [usuarioEdit, setUsuarioEdit] = useState({
     nombre: '',
     email: '',
@@ -33,110 +32,115 @@ export default function Usuarios() {
     password: '',
     rol: rolPredeterminado,
     _id: ''
-  }) // Usuario que se va a editar
+  }); // Usuario que se va a editar
+
+  const [contraseñaOriginal, setContraseñaOriginal] = useState(''); // Contraseña original para recordar
 
   useEffect(() => {
-    listarUsuarios()
-  }, [])
+    listarUsuarios();
+  }, []);
 
   const listarUsuarios = async () => {
-    setLoader(true)
+    setLoader(true);
     try {
-      const { data } = await obtenerUsuarios()
-      setUsuarios(data)
-      setLoader(false)
+      const { data } = await obtenerUsuarios();
+      setUsuarios(data);
+      setLoader(false);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'No se puede mostrar la información!',
         footer: e.message
-      })
-      setLoader(false)
+      });
+      setLoader(false);
     }
-  }
+  };
 
   const guardar = async () => {
-    setLoader(true)
+    setLoader(true);
     try {
-      const response = await crearUsuario(usuario)
-      console.log(response)
+      const response = await crearUsuario(usuario);
+      console.log(response);
       Swal.fire({
         position: 'top-end',
         icon: 'success',
         title: 'Se guardó la información correctamente',
         showConfirmButton: false,
         timer: 2000
-      })
-      listarUsuarios()
-      clearForm()
-      setLoader(false)
+      });
+      listarUsuarios();
+      clearForm();
+      setLoader(false);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'No se pudo guardar la información!',
         footer: e.message
-      })
-      setLoader(false)
+      });
+      setLoader(false);
     }
-  }
+  };
 
   const actualizarUsuario = async () => {
-    setLoader(true)
+    setLoader(true);
     try {
+      // Si el campo de contraseña está vacío, usamos la contraseña original
+      const contraseñaParaEnviar = usuarioEdit.password === '' ? contraseñaOriginal : usuarioEdit.password;
       const response = await editarUsuario(usuarioEdit._id, {
         nombre: usuarioEdit.nombre,
         email: usuarioEdit.email,
         estado: usuarioEdit.estado,
-        password: usuarioEdit.password,
+        password: contraseñaParaEnviar, // Usar la contraseña original si no se ha cambiado
         rol: usuarioEdit.rol
-      })
-      console.log(response)
+      });
+      console.log(response);
       Swal.fire({
         position: 'top-end',
         icon: 'success',
         title: 'Usuario actualizado correctamente',
         showConfirmButton: false,
         timer: 2000
-      })
-      listarUsuarios()
-      clearForm()
-      setLoader(false)
-      setEditing(false)
+      });
+      listarUsuarios();
+      clearForm();
+      setLoader(false);
+      setEditing(false);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'No se pudo actualizar la información!',
         footer: e.message
-      })
-      setLoader(false)
+      });
+      setLoader(false);
     }
-  }
+  };
 
   const handleChange = e => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     if (editing) {
       setUsuarioEdit({
         ...usuarioEdit,
         [name]: value
-      })
+      });
     } else {
       setUsuario({
         ...usuario,
         [name]: value
-      })
+      });
     }
-  }
+  };
 
   const seleccionarUsuario = (usuario) => {
-    setUsuarioEdit(usuario)
-    setEditing(true) // Activamos el modo edición
-  }
+    setUsuarioEdit(usuario);
+    setContraseñaOriginal(usuario.password); // Almacenar la contraseña original
+    setEditing(true); // Activar el modo edición
+  };
 
   const clearForm = () => {
     setUsuario({
@@ -145,7 +149,7 @@ export default function Usuarios() {
       password: '',
       estado: estadoPredeterminado,
       rol: rolPredeterminado
-    })
+    });
     setUsuarioEdit({
       nombre: '',
       email: '',
@@ -153,19 +157,20 @@ export default function Usuarios() {
       estado: estadoPredeterminado,
       rol: rolPredeterminado,
       _id: ''
-    })
-    setEditing(false)
-  }
+    });
+    setContraseñaOriginal(''); // Restablecer la contraseña original
+    setEditing(false);
+  };
 
   const borrarUsuarioPorId = async (id) => {
-    setLoader(true)
+    setLoader(true);
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
         cancelButton: 'btn btn-danger'
       },
       buttonsStyling: false
-    })
+    });
 
     swalWithBootstrapButtons.fire({
       title: '¿Estás seguro de borrar?',
@@ -178,34 +183,34 @@ export default function Usuarios() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await borrarUsuario(id)
-          console.log(response)
-          listarUsuarios()
-          setLoader(false)
+          const response = await borrarUsuario(id);
+          console.log(response);
+          listarUsuarios();
+          setLoader(false);
           swalWithBootstrapButtons.fire(
             'Eliminado!',
             'El usuario ha sido eliminado.',
             'success'
-          )
+          );
         } catch (e) {
-          console.log(e)
+          console.log(e);
           Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'No se pudo eliminar la información!',
             footer: e.message
-          })
-          setLoader(false)
+          });
+          setLoader(false);
         }
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire(
           'Cancelado',
           'El usuario está a salvo :)',
           'error'
-        )
+        );
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -227,5 +232,5 @@ export default function Usuarios() {
         editing={editing}
       />
     </>
-  )
+  );
 }

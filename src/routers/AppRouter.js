@@ -2,8 +2,10 @@ import React from 'react'
 import NavBar from "../components/ui/NavBar"
 import { Route, Routes } from 'react-router-dom'
 import Usuario from '../components/usuarios/Usuario.js'
+import Reserva from '../components/reservas/Reserva.js'
 import NotFound from '../components/ui/NotFound'
 import Footer from '../components/ui/Footer'
+
 
 export default function AppRouter() {
   return (
@@ -12,6 +14,7 @@ export default function AppRouter() {
          <div className='container'>
             <Routes>
                 <Route path='/' element={<Usuario />}/>
+                <Route path='/reservas' element={<Reserva />}/>
                 <Route path='*' element={<NotFound />}/>    
             </Routes> 
          </div>
