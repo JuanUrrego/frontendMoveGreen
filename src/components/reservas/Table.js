@@ -1,52 +1,39 @@
 import React from 'react';
 
-export default function Table({ reservas = [], borrarReservaPorId, cargarReserva }) {
+export default function Grid({ reservas = [], borrarReservaPorId, cargarReserva }) {
   return (
-    <div style={{ overflowX: 'auto' }}>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Email</th>
-            <th scope="col">Ciudad</th>
-            <th scope="col">Tipo Vehículo</th>
-            <th scope="col">Fecha Reserva</th>
-            <th scope="col">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reservas.map(({ nombre, email, ciudad, tipoVehiculo, fechaReserva, _id }, index) => (
-            <tr key={_id}>
-              <th scope="row">{index + 1}</th>
-              <td>{nombre}</td>
-              <td>{email}</td>
-              <td>{ciudad?.nombre || 'N/A'}</td>
-              <td>{tipoVehiculo?.nombre || 'N/A'}</td>
-              <td>{fechaReserva}</td>
-              <td>
-                <button
-                  type="button"
-                  className="btn btn-info"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  onClick={() => cargarReserva({ nombre, email, ciudad, tipoVehiculo, fechaReserva, _id })}
-                >
-                  Editar
-                </button>
-                <button
-                  data-id={_id}
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={borrarReservaPorId}
-                >
-                  Eliminar
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="grid-container" style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' }}>
+      {reservas.map(({ nombre, email, ciudad, tipoVehiculo, fechaReserva, _id }, index) => (
+        <div key={_id} className="grid-item card" style={{ padding: '1rem', border: '1px solid #ddd', borderRadius: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+          <div className="card-body" style={{ flex: '1 1 auto' }}>
+            <h5 className="card-title">Reserva #{index + 1}</h5>
+            <p className="card-text"><strong>Nombre:</strong> {nombre}</p>
+            <p className="card-text"><strong>Email:</strong> {email}</p>
+            <p className="card-text"><strong>Ciudad:</strong> {ciudad?.ciudad || 'N/A'}</p>
+            <p className="card-text"><strong>Tipo Vehículo:</strong> {tipoVehiculo?.vehiculo || 'N/A'}</p>
+            <p className="card-text"><strong>Fecha Reserva:</strong> {fechaReserva}</p>
+          </div>
+          <div className="d-flex justify-content-between mt-auto">
+            <button
+              type="button"
+              className="btn btn-info"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              onClick={() => cargarReserva({ nombre, email, ciudad, tipoVehiculo, fechaReserva, _id })}
+            >
+              Editar
+            </button>
+            <button
+              data-id={_id}
+              type="button"
+              className="btn btn-danger"
+              onClick={borrarReservaPorId}
+            >
+              Eliminar
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

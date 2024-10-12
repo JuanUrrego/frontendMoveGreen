@@ -7,7 +7,7 @@ export default function Modal({
   clearForm, 
   editing,
   ciudades, 
-  tipos 
+  tipoVehiculos 
 }) {
   const handleChange = (e) => {
     change(e);
@@ -87,7 +87,7 @@ export default function Modal({
                   <option value="" disabled>Selecciona una ciudad</option>
                   {ciudades.map(ciudad => (
                     <option key={ciudad._id} value={ciudad._id}>
-                      {ciudad.ciudad} {/* Ajustar el campo según cómo se llame en tu API */}
+                      {ciudad.ciudad} {}
                     </option>
                   ))}
                 </select>
@@ -103,9 +103,9 @@ export default function Modal({
                   required
                 >
                   <option value="" disabled>Selecciona un tipo de vehículo</option>
-                  {tipos.map(tipo => (
-                    <option key={tipo._id} value={tipo._id}>
-                      {tipo.vehiculo} {/* Ajustar el campo según cómo se llame en tu API */}
+                  {tipoVehiculos.map(tipoVehiculo => (
+                    <option key={tipoVehiculo._id} value={tipoVehiculo._id}>
+                      {tipoVehiculo.vehiculo} {}
                     </option>
                   ))}
                 </select>

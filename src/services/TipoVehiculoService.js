@@ -1,28 +1,28 @@
 import { axiosConfiguration } from '../configuration/axiosConfiguration';
 
 // Obtener todos los reservas
-const obtenerTipos = () => {
-    return axiosConfiguration.get('/tipo');
+const obtenerTipovehiculos = () => {
+    return axiosConfiguration.get('/tipoVehiculo');
 };
 
 // Crear un nuevo reserva
-const crearTipo = (data) => {
-    return axiosConfiguration.post('/tipo', data);
+const crearTipoVehiculo = (data) => {
+    return axiosConfiguration.post('/tipoVehiculo', data);
 };
 
 // Editar un reserva
-const editarTipo = (tipoId, data) => {
-    return axiosConfiguration.put(`/tipo/${tipoId}`, data);
+const editarTipoVehiculo = (tipoVehiculoId, data) => {
+    return axiosConfiguration.put(`/tipoVehiculo/${tipoVehiculoId}`, data);
 };
 
 // Eliminar un reserva
-const borrarTipo = (tipoId) => {
-    return axiosConfiguration.delete(`/tipo/${tipoId}`);
+const borrarTipoVehiculo = (tipoVehiculoId) => {
+    return axiosConfiguration.delete(`/tipoVehiculo/${tipoVehiculoId}`);
 };
 
 export {
-    obtenerTipos,
-    crearTipo,
-    editarTipo,
-    borrarTipo
+    obtenerTipovehiculos,
+    crearTipoVehiculo,
+    editarTipoVehiculo,
+    borrarTipoVehiculo
 };

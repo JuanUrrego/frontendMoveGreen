@@ -7,12 +7,12 @@ import ButtonModal from '../ui/ButtonModal';
 import Spinner from '../ui/Spinner';
 import Swal from 'sweetalert2';
 import { obtenerCiudades } from '../../services/CiudadService.js';
-import { obtenerTipos } from '../../services/TipoVehiculoService.js';
+import { obtenerTipovehiculos } from '../../services/TipoVehiculoService.js';
 
 export default function Reserva() {
     const [reservas, setReservas] = useState([]);
     const [ciudades, setCiudades] = useState([]);
-    const [tipos, setTipos] = useState([]);
+    const [tipoVehiculos, setTipoVehiculos] = useState([]);
     const [loader, setLoader] = useState(false);
     const [editing, setEditing] = useState(false);
     const [reservaEdit, setReservaEdit] = useState(null);
@@ -28,7 +28,7 @@ export default function Reserva() {
     useEffect(() => {
         listarReservas();
         listarCiudades();
-        listarTipos();
+        listarTipoVehiculos();
     }, []);
 
     const listarCiudades = async () => {
@@ -40,10 +40,10 @@ export default function Reserva() {
         }
     };
 
-    const listarTipos = async () => {
+    const listarTipoVehiculos = async () => {
         try {
-            const { data } = await obtenerTipos();
-            setTipos(data);
+            const { data } = await obtenerTipovehiculos();
+            setTipoVehiculos(data);
         } catch (e) {
             console.error(e);
         }
@@ -215,7 +215,7 @@ export default function Reserva() {
                 clearForm={clearForm}
                 editing={editing}
                 ciudades={ciudades}
-                tipos={tipos}
+                tipoVehiculos={tipoVehiculos}
             />
         </>
     );
