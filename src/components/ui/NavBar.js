@@ -1,8 +1,6 @@
-// Archivo: NavBar.js
 import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { logout } from '../../services/authService'; // Asegúrate de tener un servicio de logout
-
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -13,15 +11,13 @@ export default function NavBar() {
     navigate('/'); // Redirige a la página de inicio de sesión
   };
 
-  
-
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#4caf50' }}> {/* Verde personalizado */}
       <div className="container-fluid">
         <Link
           to='/reservas'
           tabIndex={0}
-          className="nav-brand"
+          className="btn btn-success rounded-pill nav-brand" // Cambié las clases aquí
           aria-label='Ir a inicio'
         >
           MOVEGREEN
@@ -37,13 +33,6 @@ export default function NavBar() {
               className='nav-link'
             >
               Reservas
-            </NavLink>
-            <NavLink
-              to='/usuarios'
-              tabIndex={2}
-              className='nav-link'
-            >
-              Usuarios
             </NavLink>
           </div>
           {/* Botón de Cerrar Sesión */}

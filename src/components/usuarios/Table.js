@@ -38,7 +38,7 @@ export default function Table({
             <td>
               <button 
                 type="button" 
-                className="btn btn-info" 
+                className="btn btn-success" 
                 data-bs-toggle="modal" 
                 data-bs-target="#exampleModal" 
                 onClick={() => editarPorId({ nombre, email, estado, rol, _id })}>
@@ -47,7 +47,7 @@ export default function Table({
               
               <button 
                 type="button" 
-                className="btn btn-danger" 
+                className="btn btn-secondary" 
                 onClick={() => borrarPorId(_id)}>
                 Eliminar
               </button>
