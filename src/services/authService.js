@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4000/auth'; // Asegúrate de que la URL sea correcta
+const API_URL = 'https://movegreenbankend-production.up.railway.app/auth'; // Asegúrate de que la URL sea correcta
 
 const login = async (email, password) => {
   try {
