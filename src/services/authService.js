@@ -1,20 +1,17 @@
-import axios from 'axios';
+import { axiosConfiguration } from '../configuration/axiosConfiguration';
 
-const API_URL = 'https://movegreenbankend-production.up.railway.app/auth'; // Asegúrate de que la URL sea correcta
-
+// Función para iniciar sesión
 const login = async (email, password) => {
   try {
-    const response = await axios.post(API_URL, { email, password });
+    const response = await axiosConfiguration.post('/auth', { email, password });
     return response.data; // Devuelve los datos del usuario si la autenticación es exitosa
   } catch (error) {
     if (error.response && error.response.data) {
-      // Muestra el mensaje de error proporcionado por el backend
       throw new Error(error.response.data.mensaje || 'Error al iniciar sesión');
     }
     throw new Error('Error de red');
   }
 };
-
 
 // Función para cerrar sesión
 const logout = () => {
@@ -43,4 +40,3 @@ const getUser = () => {
 };
 
 export { login, logout, setToken, getToken, setUser, getUser };
-
