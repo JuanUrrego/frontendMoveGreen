@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { login, setToken, setUser } from '../../services/authService';
 import Swal from 'sweetalert2';
+import CrearUsuarioModal from './CrearUsuarioModal'; // Importar el nuevo modal
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Para controlar la visibilidad del modal
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,7 +31,6 @@ export default function Auth() {
       // Redirigir a la página principal o dashboard
       window.location.href = '/reservas';
     } catch (error) {
-      // Mostrar mensaje de error
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -38,6 +39,14 @@ export default function Auth() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleShowModal = () => {
+    setShowModal(true); // Abre el modal
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // Cierra el modal
   };
 
   return (
@@ -74,10 +83,18 @@ export default function Auth() {
                   {loading ? 'Cargando...' : 'Iniciar Sesión'}
                 </button>
               </form>
+              <div className="text-center mt-3">
+                <button className="btn btn-link" onClick={handleShowModal}>
+                  Crear Cuenta
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Modal de Crear Usuario */}
+      <CrearUsuarioModal show={showModal} handleClose={handleCloseModal} />
     </div>
   );
 }
